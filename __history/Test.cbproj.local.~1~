@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+  <Transactions>
+    <Transaction>2022.04.16 23:19:21.628,=C:\Users\User\Documents\Embarcadero\Studio\Projects\Project1PCH1.h</Transaction>
+    <Transaction>2022.04.16 23:19:21.690,=C:\Users\User\Documents\Embarcadero\Studio\Projects\File2.cpp</Transaction>
+    <Transaction>2022.04.16 23:19:32.324,C:\Users\User\Documents\Embarcadero\Studio\Projects\TestPCH1.h=C:\Users\User\Documents\Embarcadero\Studio\Projects\Project1PCH1.h</Transaction>
+    <Transaction>2022.04.16 23:19:32.326,C:\Users\User\Documents\Embarcadero\Studio\Projects\Test.cbproj=C:\Users\User\Documents\Embarcadero\Studio\Projects\Project1.cbproj</Transaction>
+    <Transaction>2022.04.16 23:20:18.071,=C:\Users\User\Documents\Embarcadero\Studio\Projects\Win32\Debug\primehill.dll</Transaction>
+    <Transaction>2022.04.16 23:20:18.082,=C:\Users\User\Documents\Embarcadero\Studio\Projects\Win32\Debug\primehill.lib</Transaction>
+    <Transaction>2022.04.16 23:28:08.530,C:\Users\User\Documents\Embarcadero\Studio\Projects\Test.cbproj=C:\Users\User\Documents\Embarcadero\Studio\Projects\Test.cbproj</Transaction>
+  </Transactions>
+</BorlandProject>

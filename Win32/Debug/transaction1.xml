@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CHECK stationcode="1" restaurantcode="468820013" cashservername="MID_INOSTRANTSY"  generateddatetime="2023-03-23T12:54:02" chmode="1" locale="1049" shiftdate="2023-03-23" shiftnum="265">
+<EXTINFO reservation="">
+
+<INTERFACES current="1000392">
+	<INTERFACE type="PDS" id="1000392" mode="1" interface="32">
+		<HOLDERS>
+			<ITEM cardcode="7112561"/>
+		</HOLDERS>
+		<ALLCARDS>
+			<ITEM cardcode="7112561"/>
+		</ALLCARDS>
+	</INTERFACE>
+</INTERFACES></EXTINFO>
+
+<CHECKDATA checknum="178800" printnum="2" fiscdocnum="32386" delprintnum="0" delfiscdocnum="0" extfiscid="00106907737450" tablename="40" startservice="2023-03-23T09:41:52" closedatetime="2023-03-23T12:54:02" ordernum="1661/1" guests="3" orderguid="{239517C7-AC7A-4183-A961-0E8DC8DC1855}" checkguid="{BB6E0059-A28F-44A0-A4EF-02E0062A13C7}" order_cat="1" order_type="9001" persistentcomment="">
+	<CHECKPERSONS count="2">
+		<PERSON id="{6399F5D7-5E4C-48C1-9793-1BF79890BF38}" name="Кассир" code="10" role="2"/>
+		<PERSON id="{724C1A35-D818-45F0-AAF1-1A589E9A2DDC}" name="Бабанина Татьяна" code="8080" role="5"/>
+	</CHECKPERSONS>
+	<CHECKLINES count="1">
+		<LINE id="{0C5115A7-0EFA-483B-9E87-682BB4F2D693}" code="1121" name="Комплимент Просекко" uni="125" type="dish" price="0" pr_list_sum="0" categ_id="" servprint_id="{58612B72-D173-48F1-8500-DF84E4769EBD}" servprint="Алкоголь" egais_categ_id="" quantity="0.222" sum="0">
+			<LINETAXES count="1">
+				<TAX id="{34694A49-F862-4D07-9ACD-5EECF76E1B6E}" sum="0"/>
+			</LINETAXES>
+			<LINEPAYMENTS>
+				<LINEPAYMENT id="{16D72549-14D8-4F31-9E2A-0A833D4F5EED}" sum="0"/>
+			</LINEPAYMENTS>
+		</LINE>
+	</CHECKLINES>
+	<CHECKCATEGS count="1">
+		<CATEG id="{58612B72-D173-48F1-8500-DF84E4769EBD}" code="5" name="Алкоголь" sum="0" discsum="0"/>
+	</CHECKCATEGS>
+	<CHECKPAYMENTS count="1">
+		<PAYMENT id="{16D72549-14D8-4F31-9E2A-0A833D4F5EED}" code="1" name="Рубли" uni="5004" paytype="1" bsum="0" sum="0"/>
+	</CHECKPAYMENTS>
+	<CHECKTAXES count="1">
+		<TAX id="{34694A49-F862-4D07-9ACD-5EECF76E1B6E}" code="1" rate="0" sum="0" name="НДС"/>
+	</CHECKTAXES>
+	<EXTPROPERTIES>
+		<PROPERTY name="{71F830D3-2DE3-4F74-B8F6-0BF199291C86}" rk_type_name="OrderSource" value="{BACC15A2-3973-4CD9-A267-B14E1454DF78}"/>
+		<PROPERTY name="{7DC7AF79-1D00-4573-BE8A-A02C6FA3B430}" rk_type_name="OrderQueueNumber" value="A54"/>
+	</EXTPROPERTIES>
+	<CURRENCIES/>
+</CHECKDATA>
+</CHECK>

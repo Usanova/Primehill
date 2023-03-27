@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<Configuration>
+    <ApiAddress>rkeeper-api.dev.p-h.app</ApiAddress>
+	<SSL>true</SSL>
+    <PlaceOfService>
+        <PlaceCode>1</PlaceCode>
+        <LoyltyApiToken>c81-d673-d559-ae1</LoyltyApiToken>
+    </PlaceOfService>
+    <PlaceOfService>
+        <PlaceCode>18</PlaceCode>
+        <LoyltyApiToken>bdb-4fc8-610c-67b</LoyltyApiToken>
+    </PlaceOfService>
+<PlaceOfService>
+        <PlaceCode>19</PlaceCode>
+        <LoyltyApiToken>bdb-4fc8-610c-67b</LoyltyApiToken>
+    </PlaceOfService>
+    <BonusAccount>
+        <FarcardsSubAccount>1</FarcardsSubAccount>
+        <CurrencyCode>99</CurrencyCode>
+    </BonusAccount>
+<BonusAccount>
+        <FarcardsSubAccount>1</FarcardsSubAccount>
+        <CurrencyCode>103</CurrencyCode>
+    </BonusAccount>
+    <DepositAccount>
+        <FarcardsSubAccount>0</FarcardsSubAccount>
+        <CurrencyCode>0</CurrencyCode>
+    </DepositAccount>
+</Configuration>

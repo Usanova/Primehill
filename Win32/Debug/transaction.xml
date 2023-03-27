@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CHECK stationcode="1" restaurantcode="425280001" cashservername="MIDPH"  generateddatetime="2022-05-06T14:01:12" chmode="1" locale="1049" shiftdate="2022-05-06" shiftnum="88">
+<EXTINFO reservation="">
+
+<INTERFACES current="1000219">
+	<INTERFACE type="PDS" id="1000219" mode="1" interface="6">
+		<HOLDERS>
+			<ITEM cardcode="100655"/>
+		</HOLDERS>
+		<ALLCARDS>
+			<ITEM cardcode="100655"/>
+		</ALLCARDS>
+	</INTERFACE>
+</INTERFACES></EXTINFO>
+
+<CHECKDATA checknum="100538" printnum="1" fiscdocnum="0" delprintnum="0" delfiscdocnum="0" extfiscid="" tablename="0" startservice="2022-05-06T14:00:33" closedatetime="2022-05-06T14:01:12" ordernum="1877/1" guests="1" orderguid="{EDE964C2-DE1A-4762-BE11-621025D0EE79}" checkguid="{F213568F-7AAD-4224-9CF1-E01831E3F23E}" order_cat="1" order_type="9001" persistentcomment="">
+	<CHECKPERSONS count="1">
+		<PERSON id="{571E4162-4C24-4446-9E35-7CE5C0C6D278}" name="2" code="2" role="9999"/>
+	</CHECKPERSONS>
+	<CHECKLINES count="2">
+		<LINE id="{B975A488-7489-4FE6-A511-227D7BAB7C28}" code="21" name="Бизнес обед Среда" uni="4" type="dish" price="810" pr_list_sum="810" categ_id="" servprint_id="{A2670BDB-4A87-443D-A443-E1A953A1CE6F}" servprint="Еда" quantity="1" sum="810">
+			<LINETAXES count="1">
+				<TAX id="{34694A49-F862-4D07-9ACD-5EECF76E1B6E}" sum="123.56"/>
+			</LINETAXES>
+			<DISCOUNTS>
+				<DISCOUNTPART id="{EA897D36-D148-4675-A58B-6E813A2A70BC}" disclineuni="14" sum="0"/>
+			</DISCOUNTS>
+			<LINEPAYMENTS>
+				<LINEPAYMENT id="{A6BDBFCF-5D72-4CAE-AB4A-086BBD8DFCCC}" sum="100"/>
+				<LINEPAYMENT id="{16D72549-14D8-4F31-9E2A-0A833D4F5EED}" sum="710"/>
+			</LINEPAYMENTS>
+		</LINE>
+		<LINE id="{D41BD7D1-AF31-4E9F-AAF5-5F0F52EDE3CC}" code="23" name="Соус Болоньезе" uni="8" type="dish" price="630" pr_list_sum="630" categ_id="" servprint_id="{A2670BDB-4A87-443D-A443-E1A953A1CE6F}" servprint="Еда" quantity="1" sum="630">
+			<LINETAXES count="1">
+				<TAX id="{34694A49-F862-4D07-9ACD-5EECF76E1B6E}" sum="96.1"/>
+			</LINETAXES>
+			<DISCOUNTS>
+				<DISCOUNTPART id="{EA897D36-D148-4675-A58B-6E813A2A70BC}" disclineuni="14" sum="0"/>
+			</DISCOUNTS>
+			<LINEPAYMENTS>
+				<LINEPAYMENT id="{B22283CB-204A-460A-B69C-29B3525A4458}" sum="20"/>
+				<LINEPAYMENT id="{16D72549-14D8-4F31-9E2A-0A833D4F5EED}" sum="610"/>
+			</LINEPAYMENTS>
+		</LINE>
+	</CHECKLINES>
+	<CHECKCATEGS count="1">
+		<CATEG id="{A2670BDB-4A87-443D-A443-E1A953A1CE6F}" code="12" name="Еда" sum="1440" discsum="0"/>
+	</CHECKCATEGS>
+	<CHECKDISCOUNTS count="1">
+		<DISCOUNT id="{EA897D36-D148-4675-A58B-6E813A2A70BC}" code="2" name="Бонусы 5%" uni="14" interface="6" cardcode="100655" account="17979743" sum="0"/>
+	</CHECKDISCOUNTS>
+	<CHECKPAYMENTS count="3">
+		<PAYMENT id="{A6BDBFCF-5D72-4CAE-AB4A-086BBD8DFCCC}" code="97" name="PH Bonus" uni="19" paytype="3" interface="6" cardcode="100655" account="17979743" ownerinfo="Забужко Береслава Викторовна" exttransactioninfo="" bsum="100" sum="100"/>
+		<PAYMENT id="{B22283CB-204A-460A-B69C-29B3525A4458}" code="98" name="PH Deposit" uni="24" paytype="3" interface="6" cardcode="100655" account="17979743" ownerinfo="Забужко Береслава Викторовна" exttransactioninfo="" bsum="20" sum="20"/>
+		<PAYMENT id="{16D72549-14D8-4F31-9E2A-0A833D4F5EED}" code="1" name="Рубли" uni="29" paytype="1" bsum="1320" sum="1320"/>
+	</CHECKPAYMENTS>
+	<CHECKTAXES count="1">
+		<TAX id="{34694A49-F862-4D07-9ACD-5EECF76E1B6E}" code="1" rate="18" sum="123.56" name="НДС"/>
+	</CHECKTAXES>
+	<CHECKTAXES count="1">
+		<TAX id="{34694A49-F862-4D07-9ACD-5EECF76E1B6E}" code="1" rate="18" sum="219.66" name="НДС"/>
+	</CHECKTAXES>
+	<CHECKTAXES count="1">
+		<TAX id="{34694A49-F862-4D07-9ACD-5EECF76E1B6E}" code="1" rate="18" sum="219.66" name="НДС"/>
+	</CHECKTAXES>
+</CHECKDATA>
+</CHECK>

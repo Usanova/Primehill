@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CHECK stationcode="1" restaurantcode="425280001" cashservername="MIDPH"  generateddatetime="2022-04-21T23:15:11" chmode="1" locale="1049" shiftdate="2022-04-21" shiftnum="86">
+<EXTINFO reservation="">
+
+<INTERFACES current="1000219">
+	<INTERFACE type="PDS" id="1000219" mode="1" interface="6">
+		<HOLDERS>
+			<ITEM cardcode="100755"/>
+		</HOLDERS>
+		<ALLCARDS>
+			<ITEM cardcode="100755"/>
+		</ALLCARDS>
+	</INTERFACE>
+</INTERFACES></EXTINFO>
+
+<CHECKDATA checknum="100526" printnum="10" fiscdocnum="0" delprintnum="0" delfiscdocnum="0" extfiscid="" tablename="0" startservice="2022-04-21T23:11:32" closedatetime="2022-04-21T23:15:11" ordernum="1841/1" guests="1" orderguid="{5E2DAB91-BDC9-408A-8690-16736C3DC73B}" checkguid="{E2AC5050-1702-4F07-BC1B-89FCC4A03355}" order_cat="1" order_type="9001" persistentcomment="">
+	<CHECKPERSONS count="1">
+		<PERSON id="{571E4162-4C24-4446-9E35-7CE5C0C6D278}" name="2" code="2" role="9999"/>
+	</CHECKPERSONS>
+	<CHECKLINES count="10">
+		<LINE id="{54693AB9-FCB2-45DB-AC4E-C147C4163191}" code="40" name="Равиоли зеленый медзалуна" uni="5" type="dish" price="633" pr_list_sum="633" categ_id="" servprint_id="{020C8CDB-C6B6-45CB-A546-F07BBC1861CB}" servprint="Паста" quantity="1" sum="443.1">
+			<LINETAXES count="1">
+				<TAX id="{34694A49-F862-4D07-9ACD-5EECF76E1B6E}" sum="67.59"/>
+			</LINETAXES>
+			<DISCOUNTS>
+				<DISCOUNTPART id="{DD92DE85-5DD1-47D2-A567-20D4370E90E3}" disclineuni="58" sum="-189.9"/>
+			</DISCOUNTS>
+			<LINEPAYMENTS>
+				<LINEPAYMENT id="{16D72549-14D8-4F31-9E2A-0A833D4F5EED}" sum="443.1"/>
+			</LINEPAYMENTS>
+		</LINE>
+		<LINE id="{572A8CE1-5B0B-4DD8-90AF-67EF611646A2}" code="19" name="Черные феттуччини с лососем" uni="10" type="dish" price="500" pr_list_sum="500" categ_id="" servprint_id="{020C8CDB-C6B6-45CB-A546-F07BBC1861CB}" servprint="Паста" quantity="1" sum="350">
+			<LINETAXES count="1">
+				<TAX id="{34694A49-F862-4D07-9ACD-5EECF76E1B6E}" sum="53.39"/>
+			</LINETAXES>
+			<DISCOUNTS>
+				<DISCOUNTPART id="{DD92DE85-5DD1-47D2-A567-20D4370E90E3}" disclineuni="58" sum="-150"/>
+			</DISCOUNTS>
+			<LINEPAYMENTS>
+				<LINEPAYMENT id="{16D72549-14D8-4F31-9E2A-0A833D4F5EED}" sum="350"/>
+			</LINEPAYMENTS>
+		</LINE>
+		<LINE id="{2945F906-38CD-410C-8752-39CA0F5E1B02}" code="85" name="Комбо ланч 1" uni="14" type="combo" price="200" pr_list_sum="200" categ_id="" servprint_id="" sum="140" quantity="1"/>
+		<LINE id="{DC4A8A58-F5A5-4082-98AA-CE539EA68853}" code="43" name="Салат Нисуаз" uni="17" type="dish" parent="14" price="100" pr_list_sum="72.56" categ_id="" servprint_id="{D71DD79F-7C1B-43B8-80AA-3621C22C3E78}" servprint="Бизнес ланч" quantity="1" sum="50.79">
+			<LINETAXES count="1">
+				<TAX id="{34694A49-F862-4D07-9ACD-5EECF76E1B6E}" sum="7.75"/>
+			</LINETAXES>
+			<DISCOUNTS>
+				<DISCOUNTPART id="{DD92DE85-5DD1-47D2-A567-20D4370E90E3}" disclineuni="58" sum="-21.77"/>
+			</DISCOUNTS>
+			<LINEPAYMENTS>
+				<LINEPAYMENT id="{16D72549-14D8-4F31-9E2A-0A833D4F5EED}" sum="50.79"/>
+			</LINEPAYMENTS>
+		</LINE>
+		<LINE id="{DC920E88-A8E5-4D19-A4F5-3E8507CC24ED}" code="44" name="Капрезе Ланч" uni="23" type="dish" parent="14" price="0" pr_list_sum="109.21" categ_id="" servprint_id="{D71DD79F-7C1B-43B8-80AA-3621C22C3E78}" servprint="Бизнес ланч" quantity="1" sum="76.45">
+			<LINETAXES count="1">
+				<TAX id="{34694A49-F862-4D07-9ACD-5EECF76E1B6E}" sum="11.66"/>
+			</LINETAXES>
+			<DISCOUNTS>
+				<DISCOUNTPART id="{DD92DE85-5DD1-47D2-A567-20D4370E90E3}" disclineuni="58" sum="-32.76"/>
+			</DISCOUNTS>
+			<LINEPAYMENTS>
+				<LINEPAYMENT id="{16D72549-14D8-4F31-9E2A-0A833D4F5EED}" sum="76.45"/>
+			</LINEPAYMENTS>
+		</LINE>
+		<LINE id="{C2A805F1-6006-4219-8536-74590C57D0EC}" code="71" name="Лимонад груша" uni="29" type="dish" parent="14" price="0" pr_list_sum="18.23" categ_id="" servprint_id="{722238A5-C02F-4472-A054-ED22E68751B2}" servprint="Детское меню" quantity="1" sum="12.76">
+			<LINETAXES count="1">
+				<TAX id="{34694A49-F862-4D07-9ACD-5EECF76E1B6E}" sum="1.95"/>
+			</LINETAXES>
+			<DISCOUNTS>
+				<DISCOUNTPART id="{DD92DE85-5DD1-47D2-A567-20D4370E90E3}" disclineuni="58" sum="-5.47"/>
+			</DISCOUNTS>
+			<LINEPAYMENTS>
+				<LINEPAYMENT id="{16D72549-14D8-4F31-9E2A-0A833D4F5EED}" sum="12.76"/>
+			</LINEPAYMENTS>
+		</LINE>
+		<LINE id="{45426897-EA77-4682-8081-F0FA0034256E}" code="31" name="Жареные кальмары с тимьян" uni="33" type="dish" price="274" pr_list_sum="748" categ_id="" servprint_id="{16B5A1A2-7995-4375-A8CB-62353CA9D5BC}" servprint="Закуски" quantity="2" sum="523.6">
+			<LINETAXES count="1">
+				<TAX id="{34694A49-F862-4D07-9ACD-5EECF76E1B6E}" sum="79.87"/>
+			</LINETAXES>
+			<DISCOUNTS>
+				<DISCOUNTPART id="{DD92DE85-5DD1-47D2-A567-20D4370E90E3}" disclineuni="58" sum="-224.4"/>
+			</DISCOUNTS>
+			<LINEPAYMENTS>
+				<LINEPAYMENT id="{16D72549-14D8-4F31-9E2A-0A833D4F5EED}" sum="523.6"/>
+			</LINEPAYMENTS>
+		</LINE>
+		<LINE id="{3DDD0FE8-5E13-4FC9-8CC1-6452D411ABA7}" code="65" name="Красная тарелка" uni="37" type="modify" parent="33" price="100" quantity="2" sum="200" categ_id="" servprint_id=""/>
+		<LINE id="{572A8CE1-5B0B-4DD8-90AF-67EF611646A2}" code="19" name="Черные феттуччини с лососем" uni="38" type="dish" price="500" pr_list_sum="340" categ_id="" servprint_id="{020C8CDB-C6B6-45CB-A546-F07BBC1861CB}" servprint="Паста" quantity="0.68" sum="238">
+			<LINETAXES count="1">
+				<TAX id="{34694A49-F862-4D07-9ACD-5EECF76E1B6E}" sum="36.3"/>
+			</LINETAXES>
+			<DISCOUNTS>
+				<DISCOUNTPART id="{DD92DE85-5DD1-47D2-A567-20D4370E90E3}" disclineuni="58" sum="-102"/>
+			</DISCOUNTS>
+			<LINEPAYMENTS>
+				<LINEPAYMENT id="{16D72549-14D8-4F31-9E2A-0A833D4F5EED}" sum="238"/>
+			</LINEPAYMENTS>
+		</LINE>
+		<LINE id="{09BB4BFD-E652-40A5-8E61-2CAD87A7A939}" code="77" name="Чешуя дракона" uni="42" type="dish" price="135" pr_list_sum="135" categ_id="" servprint_id="{A2670BDB-4A87-443D-A443-E1A953A1CE6F}" servprint="Еда" quantity="1" sum="94.5">
+			<LINETAXES count="1">
+				<TAX id="{34694A49-F862-4D07-9ACD-5EECF76E1B6E}" sum="14.42"/>
+			</LINETAXES>
+			<DISCOUNTS>
+				<DISCOUNTPART id="{DD92DE85-5DD1-47D2-A567-20D4370E90E3}" disclineuni="58" sum="-40.5"/>
+			</DISCOUNTS>
+			<LINEPAYMENTS>
+				<LINEPAYMENT id="{16D72549-14D8-4F31-9E2A-0A833D4F5EED}" sum="94.5"/>
+			</LINEPAYMENTS>
+		</LINE>
+	</CHECKLINES>
+	<CHECKCATEGS count="5">
+		<CATEG id="{020C8CDB-C6B6-45CB-A546-F07BBC1861CB}" code="16" name="Паста" sum="1031.1" discsum="-441.9"/>
+		<CATEG id="{D71DD79F-7C1B-43B8-80AA-3621C22C3E78}" code="10" name="Бизнес ланч" sum="127.24" discsum="-54.53"/>
+		<CATEG id="{722238A5-C02F-4472-A054-ED22E68751B2}" code="11" name="Детское меню" sum="12.76" discsum="-5.47"/>
+		<CATEG id="{16B5A1A2-7995-4375-A8CB-62353CA9D5BC}" code="6" name="Закуски" sum="523.6" discsum="-224.4"/>
+		<CATEG id="{A2670BDB-4A87-443D-A443-E1A953A1CE6F}" code="12" name="Еда" sum="94.5" discsum="-40.5"/>
+	</CHECKCATEGS>
+	<CHECKDISCOUNTS count="1">
+		<DISCOUNT id="{DD92DE85-5DD1-47D2-A567-20D4370E90E3}" code="20" name="Скидка 30%" uni="58" interface="6" cardcode="100755" account="100755" sum="-766.8"/>
+	</CHECKDISCOUNTS>
+	<CHECKPAYMENTS count="1">
+		<PAYMENT id="{16D72549-14D8-4F31-9E2A-0A833D4F5EED}" code="1" name="Рубли" uni="67" paytype="1" bsum="1789.2" sum="1789.2"/>
+	</CHECKPAYMENTS>
+	<CHECKTAXES count="1">
+		<TAX id="{34694A49-F862-4D07-9ACD-5EECF76E1B6E}" code="1" rate="18" sum="272.93" name="НДС"/>
+	</CHECKTAXES>
+</CHECKDATA>
+</CHECK> 

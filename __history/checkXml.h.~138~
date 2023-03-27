@@ -1,0 +1,460 @@
+#include <string>
+#include <vector>
+#include <exception>
+#include <math.h>
+#include <algorithm>
+#include "rapidjson/document.h"
+#include "rapidjson/writer.h"
+#include "rapidjson/stringbuffer.h"
+
+#include "rapidxml.hpp"
+
+struct ClientIdNotFound : public std::exception
+{};
+
+struct XmlElementNotFound  : public std::exception
+{
+	public:
+		string message;
+		XmlElementNotFound(string message_)
+		{
+			message = message_;
+		}
+};
+
+struct NodeNotFound : public XmlElementNotFound
+{
+	string message;
+
+	public:
+		NodeNotFound(string nodeName) : XmlElementNotFound("Node " + nodeName + " not found")
+		{}
+};
+
+struct AttributeNotFound : public XmlElementNotFound
+{
+	string message;
+
+	public:
+		AttributeNotFound(string attributeName) : XmlElementNotFound("Attribute " + attributeName + " not found")
+		{}
+};
+
+
+
+class checkXml
+{
+	private:
+		rapidxml::xml_document<> input_doc;
+		rapidxml::xml_node<> * check;
+		rapidxml::xml_node<> *checkdata;
+		rapidxml::xml_node<> *checklines;
+		rapidjson::Document json_doc;
+		vector<char> inputBuf;
+
+        string ToUtf8(const wstring& str)
+		{
+			static wstring_convert<codecvt_utf8<wchar_t>> Utf8conv;
+			return Utf8conv.to_bytes(str);
+		}
+
+        char* sliceId(char* s)
+		{
+			int len = strlen(s);
+			if(len == 0)
+				return s;
+
+			if(s[len-1] == '}')
+				s[len - 1] = '\0';
+			return s + 1;
+		};
+
+		inline void SetJsonValue(rapidjson::Document &doc, char* member_str,
+			const char* value_str)
+		{
+			rapidjson::Value value(value_str, doc.GetAllocator());
+			rapidjson::Value member(member_str, doc.GetAllocator());
+			doc.AddMember(member, value, doc.GetAllocator());
+		}
+
+		inline void SetJsonValue(rapidjson::Document &doc, char* member_str,
+			double value_num)
+		{
+			rapidjson::Value value(value_num);
+			rapidjson::Value member(member_str, doc.GetAllocator());
+			doc.AddMember(member, value, doc.GetAllocator());
+		}
+
+		inline void SetJsonValue(rapidjson::Document &doc, char* member_str,
+			rapidjson::Value &value)
+		{
+			rapidjson::Value member(member_str, doc.GetAllocator());
+			doc.AddMember(member, value, doc.GetAllocator());
+		}
+
+		inline void SetJsonValue(rapidjson::Document &doc, rapidjson::Value &sub_doc, char* member_str,
+			const char* value_str)
+		{
+			rapidjson::Value value(value_str, doc.GetAllocator());
+			rapidjson::Value member(member_str, doc.GetAllocator());
+			sub_doc.AddMember(member, value, doc.GetAllocator());
+		}
+
+		inline void SetJsonValue(rapidjson::Document &doc, rapidjson::Value &sub_doc, char* member_str,
+			double value_num)
+		{
+			rapidjson::Value value(value_num);
+			rapidjson::Value member(member_str, doc.GetAllocator());
+			sub_doc.AddMember(member, value, doc.GetAllocator());
+		}
+
+		inline char* getStrAttribute(rapidxml::xml_node<> * node, char* atrName)
+		{
+			if(node->first_attribute(atrName) == NULL)
+				throw AttributeNotFound(atrName);
+
+			return node->first_attribute(atrName)->value();
+		}
+
+		inline int getIntAttribute(rapidxml::xml_node<> * node, char* atrName)
+		{
+			if(node->first_attribute(atrName) == NULL)
+				throw AttributeNotFound(atrName);
+
+			return atoi(node->first_attribute(atrName)->value());
+		}
+
+		inline float getFloatAttribute(rapidxml::xml_node<> * node, char* atrName)
+		{
+			if(node->first_attribute(atrName) == NULL)
+				throw AttributeNotFound(atrName);
+
+			return atof(node->first_attribute(atrName)->value());
+		}
+
+		void jsonToVector(vector<char> &res)
+		{
+			rapidjson::StringBuffer json_buffer;
+			rapidjson::Writer<rapidjson::StringBuffer> writer(json_buffer);
+			json_doc.Accept(writer);
+			const char* json_str = json_buffer.GetString();
+
+			res.resize(strlen(json_str) + 1);
+			CopyMemory(res.data(), json_str, strlen(json_str) + 1);
+		}
+
+		void formBaseJsonResponse()
+		{
+			checklines = checkdata->first_node("CHECKLINES");
+
+			json_doc.SetObject();
+
+			SetJsonValue(json_doc,"OrganizationId", getStrAttribute(check, "restaurantcode"));
+			SetJsonValue(json_doc,"OrderId", sliceId(getStrAttribute(checkdata, "orderguid")));
+
+			if(checklines == NULL)
+			{
+				SetJsonValue(json_doc, "OrderSum", 0.0);
+				return;
+			}
+
+			double orderSumWithDiscount = 0;
+			for (rapidxml::xml_node<>* dish = checklines->first_node();
+				dish; dish = dish->next_sibling())
+			{
+				string type = string(getStrAttribute(dish,"type"));
+				double dish_sum;
+
+				if(type == "modify" || (type == "dish" && dish->first_attribute("parent") != NULL))
+				{
+					dish_sum = 0;
+				}
+				else
+				{
+					dish_sum = getFloatAttribute(dish, "sum");
+				}
+
+				orderSumWithDiscount +=  dish_sum;
+			}
+
+			SetJsonValue(json_doc,"OrderSumWithDiscount", orderSumWithDiscount);
+		}
+
+		void formJsonResponse(string clientId)
+		{
+			formBaseJsonResponse();
+
+			SetJsonValue(json_doc,"ParentOrderId", sliceId(getStrAttribute(checkdata,"orderguid")));
+			SetJsonValue(json_doc,"ClientId", clientId.c_str());
+			SetJsonValue(json_doc,"OrderNumber", getStrAttribute(checkdata,"checknum"));
+
+			if(checklines == NULL)
+			{
+				SetJsonValue(json_doc, "OrderSum", 0.0);
+
+				rapidjson::Value dishesJson(rapidjson::kArrayType);
+				SetJsonValue(json_doc, "Order", dishesJson);
+				return;
+			}
+
+			double orderSum = 0;
+			for (rapidxml::xml_node<>* dish = checklines->first_node();
+				dish; dish = dish->next_sibling())
+			{
+				string type = string(getStrAttribute(dish, "type"));
+				double dish_price;
+
+				if(type == "modify" || (type == "dish" && dish->first_attribute("parent") != NULL))
+				{
+					dish_price = 0;
+				}
+				else
+				{
+					double quantity = getFloatAttribute(dish, "quantity");
+
+					dish_price = getFloatAttribute(dish, "price")*quantity;
+				}
+
+				orderSum +=  dish_price;
+			}
+
+			SetJsonValue(json_doc,"OrderSum", orderSum);
+
+			rapidjson::Value dishesJson(rapidjson::kArrayType);
+
+			for (rapidxml::xml_node<>* dish = checklines->first_node();
+				dish; dish = dish->next_sibling())
+			{
+				rapidjson::Value dishJson;
+				dishJson.SetObject();
+
+				SetJsonValue(json_doc, dishJson, "ProductId", sliceId(getStrAttribute(dish, "id")));
+				SetJsonValue(json_doc, dishJson, "ProductName", getStrAttribute(dish, "name"));
+
+				char* quantity_str = getStrAttribute(dish, "quantity");
+				double quantity = atof(quantity_str);
+
+				string type = string(getStrAttribute(dish, "type"));
+				const char* categoryId;
+				const char* categoryName;
+				if(type == "combo")
+				{
+					categoryId = "combo";
+					categoryName = ToUtf8(L"Комбо-блюдо").c_str();
+				}
+				else if(type == "modify")
+				{
+					categoryId = "modify";
+					categoryName = ToUtf8(L"Модификатор").c_str();
+				}
+				else
+				{
+					categoryId = sliceId(getStrAttribute(dish, "servprint_id"));
+
+					try
+					{
+						categoryName = getStrAttribute(dish, "servprint");
+					}
+					catch(AttributeNotFound& e)
+					{
+						categoryName  = "";
+                    }
+				}
+
+				SetJsonValue(json_doc, dishJson, "CategoryId", categoryId);
+				SetJsonValue(json_doc, dishJson, "CategoryName", categoryName);
+
+				double price;
+				double priceWithDiscount;
+
+				if(type == "modify" || (type == "dish" && dish->first_attribute("parent") != NULL))
+				{
+					price = 0;
+					priceWithDiscount = 0;
+				}
+				else
+				{
+					price = getFloatAttribute(dish, "price");
+
+					double sum = getFloatAttribute(dish, "sum");
+					priceWithDiscount = sum/quantity;
+				}
+				SetJsonValue(json_doc, dishJson, "Price", price);
+				SetJsonValue(json_doc, dishJson, "PriceWithDiscount", priceWithDiscount);
+				SetJsonValue(json_doc, dishJson, "Amount", quantity);
+
+				dishesJson.PushBack(dishJson, json_doc.GetAllocator());
+			}
+
+			json_doc.AddMember("Order", dishesJson, json_doc.GetAllocator());
+		}
+
+	public:
+		void init(char* InpBuf)
+		{
+			const int checkStrLen = 8;
+			const int checkDataStrLen = 8;
+
+			char* s = strstr(InpBuf, "</CHECK>");
+			if(strlen(InpBuf) > s -  InpBuf +  checkStrLen)
+			{
+				char* s2 = strstr(InpBuf, "</CHECKDATA>");
+				s = min(s, s2);
+				int firstPartLen = s -  InpBuf;
+				char* inputEnd = "</CHECKDATA>\n</CHECK>\0";
+				inputBuf.resize(firstPartLen + strlen(inputEnd)+1);
+				CopyMemory(inputBuf.data(), InpBuf, firstPartLen);
+				CopyMemory(inputBuf.data() + firstPartLen,
+					inputEnd, strlen(inputEnd)+1);
+
+				int length = inputBuf.size();
+				char d =  inputBuf[length-1];
+
+				ofstream inputBuf_xml_invalid("inputBuf_xml_invalid.txt",ios::out|ios::binary);
+				inputBuf_xml_invalid << inputBuf.data();
+				inputBuf_xml_invalid.close();
+
+                input_doc.parse<0>(inputBuf.data());
+
+				check = input_doc.first_node("CHECK");
+				checkdata = check->first_node("CHECKDATA");
+				if(check == NULL)
+					throw NodeNotFound("CHECK");
+				if(checkdata == NULL)
+					throw NodeNotFound("CHECKDATA");
+
+
+				return;
+            }
+
+			int len = s - InpBuf + 8;
+			inputBuf.resize(len+1);
+			CopyMemory(inputBuf.data(), InpBuf, len);
+			inputBuf[len] = '\0';
+
+
+			input_doc.parse<0>(inputBuf.data());
+
+			check = input_doc.first_node("CHECK");
+			checkdata = check->first_node("CHECKDATA");
+			if(check == NULL)
+				throw NodeNotFound("CHECK");
+			if(checkdata == NULL)
+				throw NodeNotFound("CHECKDATA");
+
+			return;
+		}
+
+		char* getToken(rapidxml::xml_node<> *configuration)
+		{
+			int checkPlaceCode = getIntAttribute(checkdata, "order_cat");
+			char* token = NULL;
+
+			for (rapidxml::xml_node<>* placeOfService = configuration->first_node("PlaceOfService");
+				placeOfService; placeOfService = placeOfService->next_sibling("PlaceOfService"))
+			{
+				int configPlaceCode = atoi(placeOfService->first_node("PlaceCode")->value());
+				if(configPlaceCode == checkPlaceCode)
+				{
+					token = placeOfService->first_node("LoyltyApiToken")->value();
+					break;
+				}
+			}
+
+			return token;
+		}
+
+		void getJsonResponseForGetDiscount(string clientId, vector<char> &res)
+		{
+			formJsonResponse(clientId);
+
+			jsonToVector(res);
+		}
+
+		int getChmode()
+		{
+			return getIntAttribute(check, "chmode");
+        }
+
+		void getJsonResponseForCloseOrder(vector<int> bonusCurrencyCodes, int depositCurrencyCode,
+			vector<char> &res, char*& clientId, bool& getDiscountSended)
+		{
+			clientId = NULL;
+			char* depositClientId = NULL;
+			char* bonusWriteOff = NULL;
+			char* depositWriteOff = NULL;
+
+			getDiscountSended = false;
+
+			rapidxml::xml_node<> *checkpayments = checkdata->first_node("CHECKPAYMENTS");
+			if(checkpayments == NULL)
+				throw NodeNotFound("CHECKPAYMENTS");
+
+			for (rapidxml::xml_node<>* payment = checkpayments->first_node("PAYMENT");
+				payment; payment = payment->next_sibling("PAYMENT"))
+			{
+				int paymentCode = getIntAttribute(payment, "code");
+
+				if(find(bonusCurrencyCodes.begin(), bonusCurrencyCodes.end(), paymentCode) != bonusCurrencyCodes.end())
+				{
+					clientId = getStrAttribute(payment, "account");
+					bonusWriteOff = getStrAttribute(payment, "sum");
+
+					getDiscountSended = true;
+				}
+				if(paymentCode == depositCurrencyCode)
+				{
+					depositClientId = getStrAttribute(payment, "account");
+					depositWriteOff = getStrAttribute(payment, "sum");
+				}
+			}
+
+			if(clientId != NULL)
+			{
+				formJsonResponse(string(clientId));
+				SetJsonValue(json_doc,"BonusWriteOff", bonusWriteOff);
+			}
+			else
+			{
+			   rapidxml::xml_node<> *checkdiscounts = checkdata->first_node("CHECKDISCOUNTS");
+			   for (rapidxml::xml_node<>* discount = checkdiscounts->first_node("DISCOUNT");
+				discount; discount = discount->next_sibling("DISCOUNT"))
+				{
+					if(discount->first_attribute("account") != NULL)
+						clientId = getStrAttribute(discount, "account");
+
+					double discountSum = getFloatAttribute(discount, "sum");
+				}
+
+				if(clientId == NULL)
+					throw ClientIdNotFound();
+
+			   formJsonResponse(string(clientId));
+			   SetJsonValue(json_doc,"BonusWriteOff", 0.0);
+			}
+
+			if(depositClientId  != NULL)
+			{
+				SetJsonValue(json_doc,"DepositClientId", depositClientId);
+				SetJsonValue(json_doc,"DepositWriteOff", depositWriteOff);
+			}
+			else
+			{
+			   SetJsonValue(json_doc,"DepositClientId", clientId);
+			   SetJsonValue(json_doc,"DepositWriteOff", 0.0);
+			}
+
+			SetJsonValue(json_doc,"OrderDate", getStrAttribute(checkdata, "closedatetime"));
+
+			jsonToVector(res);
+
+			return;
+		}
+
+		void getJsonResponseForReturnOrder(vector<char> &res)
+		{
+			formBaseJsonResponse();
+
+			jsonToVector(res);
+		}
+};

@@ -1,0 +1,182 @@
+#include <vcl.h>
+#include <windows.h>
+#include <fstream>
+#include <string>
+#include <iostream>
+#include <sstream>
+#include <vector>
+
+#include <wininet.h>
+#pragma comment(lib,"wininet")
+
+#include <stdlib.h>
+#include <string.h>
+
+using namespace std;
+
+struct TimeoutExceeded  : public std::exception
+{
+public:
+		string message;
+		TimeoutExceeded()
+		{
+			message = "Время ожидания ответа истекло. Попробуйте повторить запрос позже.";
+		}
+};
+
+typedef struct
+{
+	char* contentType;
+	char* data;
+} PARM;
+
+HINTERNET hInternet;
+HINTERNET hConnect;
+HINTERNET hRequest;
+vector<char> szData;
+DWORD hcLastError;
+
+ DWORD WINAPI WorkerFunction(void* vThreadParm)
+ {
+	PARM* pThreadParm = (PARM*)vThreadParm;
+
+	BOOL bSend = ::HttpSendRequest(hRequest,
+		pThreadParm->contentType,
+		-1,
+		pThreadParm->data,
+		strlen(pThreadParm->data));
+		hcLastError = GetLastError();
+
+	if (!bSend)
+		return 1;
+
+	return 0;
+ }
+
+class httpClient
+{
+	public:
+		bool ssl;
+
+		 int Init(const char* serverAddress, bool ssl_)
+		 {
+			ssl = ssl_;
+			hInternet = ::InternetOpen(
+			TEXT("WinInet Test"),
+			INTERNET_OPEN_TYPE_PRECONFIG,
+			NULL,NULL,
+			0);
+
+			if (hInternet == NULL)
+				return 1;
+
+			auto port = ssl ? INTERNET_DEFAULT_HTTPS_PORT : INTERNET_DEFAULT_HTTP_PORT;
+			hConnect =
+			::InternetConnect(
+				hInternet,
+				TEXT(serverAddress),
+				port,
+				NULL,NULL,
+				INTERNET_SERVICE_HTTP,
+				0,
+				1u);
+
+			if (hConnect == NULL)
+				return 1;
+
+			return 0;
+		 }
+
+		 vector<char> SendRequest(char* methodType, char* contentType, const char* url,
+			char* data, const char** acceptTypes)
+		 {
+
+			auto internet_flag = ssl ? INTERNET_FLAG_SECURE : 0;
+			hRequest =
+				::HttpOpenRequest(
+					hConnect,
+					TEXT(methodType),
+					TEXT(url) ,
+					NULL,
+					NULL,
+					acceptTypes,
+					internet_flag,
+					1);
+
+			if (hRequest == NULL)
+			{
+				hcLastError = GetLastError();
+				return vector<char>();
+			}
+
+			PARM    threadParm;
+
+			HANDLE   hThread;
+			DWORD    dwThreadID;
+			threadParm.contentType = contentType;
+			threadParm.data = data;
+
+			hThread = CreateThread(
+				  0,            // Pointer to thread security attributes
+                  0,               // Initial thread stack size, in bytes
+				  WorkerFunction,  // Pointer to thread function
+				  &threadParm,     // The argument for the new thread
+                  0,               // Creation flags
+				  &dwThreadID     // Pointer to returned thread identifier
+			  );
+
+			szData.resize(1024);
+			// Wait for the call to InternetConnect in worker function to complete
+			DWORD   dwTimeout = 1*100;
+			if (WaitForSingleObject(hThread, dwTimeout ) == WAIT_TIMEOUT)
+			{
+				if ( hRequest )
+					InternetCloseHandle(hRequest);
+				// Wait until the worker thread exits
+				WaitForSingleObject ( hThread, INFINITE );
+                CloseHandle(hThread);
+				throw TimeoutExceeded();
+			}
+
+            // The state of the specified object (thread) is signaled
+			DWORD dwExitCode = 0;
+			if (!GetExitCodeThread( hThread, &dwExitCode))
+			{
+            	CloseHandle(hThread);
+				return vector<char>();
+			}
+
+			CloseHandle(hThread);
+			if ( dwExitCode )
+			// Worker function failed
+			   return vector<char>();;
+
+
+			DWORD dwBytesRead;
+					BOOL bRead =
+						::InternetReadFile(
+							hRequest,
+							szData.data(),szData.size()-1,
+							&dwBytesRead);
+
+
+					if (bRead == FALSE  ||  dwBytesRead == 0)
+					{		 return vector<char>();
+					}
+
+					szData[dwBytesRead] = 0;
+
+			::InternetCloseHandle(hRequest);
+
+			return move(szData);
+		 }
+
+
+
+
+		 void Close()
+		 {
+			::InternetCloseHandle(hConnect);
+			::InternetCloseHandle(hInternet);
+		 }
+};

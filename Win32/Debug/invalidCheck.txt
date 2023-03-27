@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CHECK stationcode="1" restaurantcode="425280001" cashservername="MIDPH"  generateddatetime="2022-05-07T21:26:15" chmode="10" locale="1049" shiftdate="2022-05-07" shiftnum="89">
+<EXTINFO reservation="">
+
+<INTERFACES current="1000219">
+	<INTERFACE cardcode="100655" type="PDS" id="1000219" mode="0" interface="6">
+		<HOLDERS>
+			<ITEM cardcode="100655"/>
+		</HOLDERS>
+		<ALLCARDS/>
+	</INTERFACE>
+</INTERFACES></EXTINFO>
+
+<CHECKDATA checknum="100547" printnum="5" fiscdocnum="0" delprintnum="0" delfiscdocnum="0" extfiscid="" tablename="0" startservice="2022-05-07T21:25:49" closedatetime="2022-05-07T21:26:14" ordernum="1895/1" guests="1" orderguid="{BC3E0044-8F7E-49C3-89E7-041ABD9A6FB0}" checkguid="{AB6F632E-F490-4B8F-9231-12332A3D3ECF}" order_cat="1" order_type="9001" persistentcomment="">
+	<CHECKPERSONS count="1">
+		<PERSON id="{571E4162-4C24-4446-9E35-7CE5C0C6D278}" name="2" code="2" role="9999"/>
+	</CHECKPERSONS>
+	<CHECKLINES count="1">
+		<LINE id="{45426897-EA77-4682-8081-F0FA0034256E}" code="31" name="Жареные кальмары с тимьян" uni="104" type="dish" price="274" pr_list_sum="274" categ_id="" servprint_id="{16B5A1A2-7995-4375-A8CB-62353CA9D5BC}" servprint="Закуски" quantity="1" sum="274">
+			<LINETAXES count="1">
+				<TAX id="{34694A49-F862-4D07-9ACD-5EECF76E1B6E}" sum="41.8"/>
+			</LINETAXES>
+			<DISCOUNTS>
+				<DISCOUNTPART id="{EA897D36-D148-4675-A58B-6E813A2A70BC}" disclineuni="108" sum="0"/>
+			</DISCOUNTS>
+			<LINEPAYMENTS>
+				<LINEPAYMENT id="{A6BDBFCF-5D72-4CAE-AB4A-086BBD8DFCCC}" sum="4"/>
+				<LINEPAYMENT id="{16D72549-14D8-4F31-9E2A-0A833D4F5EED}" sum="270"/>
+			</LINEPAYMENTS>
+		</LINE>
+	</CHECKLINES>
+	<CHECKCATEGS count="1">
+		<CATEG id="{16B5A1A2-7995-4375-A8CB-62353CA9D5BC}" code="6" name="Закуски" sum="274" discsum="0"/>
+	</CHECKCATEGS>
+	<CHECKDISCOUNTS count="1">
+		<DISCOUNT id="{EA897D36-D148-4675-A58B-6E813A2A70BC}" code="2" name="Бонусы 5%" uni="108" interface="6" cardcode="100655" account="17979743" sum="0"/>
+	</CHECKDISCOUNTS>
+	<CHECKPAYMENTS count="2">
+		<PAYMENT id="{A6BDBFCF-5D72-4CAE-AB4A-086BBD8DFCCC}" code="97" name="PH Bonus" uni="112" paytype="3" interface="6" cardcode="100655" account="17979743" ownerinfo="Забужко Береслава Викторовна" exttransactioninfo="" bsum="4" sum="4"/>
+		<PAYMENT id="{16D72549-14D8-4F31-9E2A-0A833D4F5EED}" code="1" name="Рубли" uni="117" paytype="1" bsum="270" sum="270"/>
+	</CHECKPAYMENTS>
+	<CHECKTAXES count="1">
+		<TAX id="{34694A49-F862-4D07-9ACD-5EECF76E1B6E}" code="1" rate="18" sum="41.8" name="НДС"/>
+	</CHECKTAXES>
+	<CHECKTAXES count="1">
+		<TAX id="{34694A49-F862-4D07-9ACD-5EECF76E1B6E}" code="1" rate="18" sum="41.8" name="НДС"/>
+	</CHECKTAXES>
+</CHECKDATA>
+</CHECK>

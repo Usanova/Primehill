@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{8678BF0E-8921-4E2F-A403-E192D1DEC8F1}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="primehill.cbproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Test.cbproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="primehill">
+        <MSBuild Projects="primehill.cbproj"/>
+    </Target>
+    <Target Name="primehill:Clean">
+        <MSBuild Projects="primehill.cbproj" Targets="Clean"/>
+    </Target>
+    <Target Name="primehill:Make">
+        <MSBuild Projects="primehill.cbproj" Targets="Make"/>
+    </Target>
+    <Target Name="Test">
+        <MSBuild Projects="Test.cbproj"/>
+    </Target>
+    <Target Name="Test:Clean">
+        <MSBuild Projects="Test.cbproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Test:Make">
+        <MSBuild Projects="Test.cbproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="primehill;Test"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="primehill:Clean;Test:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="primehill:Make;Test:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

@@ -1,0 +1,1 @@
+{"OrganizationId":"425280001","OrderId":"8EBD5DF7-0252-49D6-B6A4-8DB6520EF77E","OrderSumWithDiscount":1394.0}

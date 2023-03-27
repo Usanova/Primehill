@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CHECK stationcode="110" restaurantcode="154320001" cashservername="BAR8MIDSERV"  generateddatetime="2023-03-10T16:59:47" chmode="0" locale="1049" shiftdate="2023-03-10" shiftnum="754">
+<EXTINFO reservation="">
+
+<INTERFACES current="1025912">
+	<INTERFACE cardcode="100081" type="PDS" id="1025912" mode="0" interface="78">
+		<HOLDERS>
+			<ITEM cardcode="100081"/>
+		</HOLDERS>
+		<ALLCARDS/>
+	</INTERFACE>
+</INTERFACES></EXTINFO>
+
+</CHECK>
+<CHECKDATA checknum="0" printnum="0" fiscdocnum="0" delprintnum="0" delfiscdocnum="0" extfiscid="" tablename="13" startservice="2023-03-10T14:34:24" ordernum="33507/1" guests="2" orderguid="{C9FC9C0E-0482-4EC0-AC46-EF13442776AF}" checkguid="{744A8A40-8E2A-407F-BF79-4A39B652167A}" order_cat="16" order_type="9001" persistentcomment="">
+	<CHECKPERSONS count="1">
+		<PERSON id="{21AAA244-92D0-4407-8987-C5A7E4342F53}" name="Коровкина Ева" code="115" role="11"/>
+	</CHECKPERSONS>
+	<CHECKLINES count="1">
+		<LINE id="{75550B41-44B9-477D-9E63-58418CBA81E1}" code="9957" name="Картофель с белыми грибами 1 кг" uni="4" type="dish" price="650" pr_list_sum="100.1" categ_id="" servprint_id="{65969C51-DBDB-4D10-810F-5817A9F9E5B0}" servprint="кулинария" quantity="0.154" sum="100.1">
+			<LINETAXES count="1">
+				<TAX id="{34694A49-F862-4D07-9ACD-5EECF76E1B6E}" sum="0"/>
+			</LINETAXES>
+		</LINE>
+	</CHECKLINES>
+	<CHECKCATEGS count="1">
+		<CATEG id="{65969C51-DBDB-4D10-810F-5817A9F9E5B0}" code="13" name="кулинария" sum="100.1" discsum="0"/>
+	</CHECKCATEGS>
+	<CHECKTAXES count="1">
+		<TAX id="{34694A49-F862-4D07-9ACD-5EECF76E1B6E}" code="1" rate="0" sum="0" name="НДС"/>
+	</CHECKTAXES>
+</CHECKDATA>
+</CHECK>.6"/>
+				<LINEPAYMENT id="{16D72549-14D8-4F31-9E2A-0A833D4F5EED}" sum="125.4"/>
+			</LINEPAYMENTS>
+		</LINE>
+		<LINE id="{86D70B71-C004-453B-88CF-EB59163B56F1}" code="10106" name="Тефтели куриные в соусе, кг" uni="8" type="dish" price="950" pr_list_sum="209" categ_id="" servprint_id="{BB28A956-CE11-444C-81C2-736ED7B99B73}" servprint="Баранкин Food" quantity="0.22" sum="209">
+			<LINETAXES count="1">
+				<TAX id="{34694A49-F862-4D07-9ACD-5EECF76E1B6E}" sum="0"/>
+			</LINETAXES>
+			<DISCOUNTS>
+				<DISCOUNTPART id="{338925A5-C350-4D95-A9B4-3FCCCFE0D166}" disclineuni="102" sum="0"/>
+			</DISCOUNTS>
+			<LINEPAYMENTS>
+				<LINEPAYMENT id="{16D72549-14D8-4F31-9E2A-0A833D4F5EED}" sum="209"/>
+			</LINEPAYMENTS>
+		</LINE>
+		<LINE id="{1C81F808-33C2-428D-B068-08BBBF21FFD9}" code="9749" name="Контейнер 1 шт" uni="11" type="dish" price="0" pr_list_sum="0" categ_id="" servprint_id="{C7949D55-80A4-4E14-BCC8-C9FA6F3DBC16}" servprint="Роллы" quantity="5" sum="0">
+			<LINETAXES count="1">
+				<TAX id="{34694A49-F862-4D07-9ACD-5EECF76E1B6E}" sum="0"/>
+			</LINETAXES>
+			<DISCOUNTS>
+				<DISCOUNTPART id="{338925A5-C350-4D95-A9B4-3FCCCFE0D166}" disclineuni="102" sum="0"/>
+			</DISCOUNTS>
+			<LINEPAYMENTS>
+				<LINEPAYMENT id="{16D72549-14D8-4F31-9E2A-0A833D4F5EED}" sum="0"/>
+			</LINEPAYMENTS>
+		</LINE>
+		<LINE id="{F88A5E1B-7740-4AE8-B168-53BFD6D5BB12}" code="10201" name="Приборы 1шт" uni="14" type="dish" price="0" pr_list_sum="0" categ_id="" servprint_id="{C7949D55-80A4-4E14-BCC8-C9FA6F3DBC16}" servprint="Роллы" quantity="2" sum="0">
+			<LINETAXES count="1">
+				<TAX id="{34694A49-F862-4D07-9ACD-5EECF76E1B6E}" sum="0"/>
+			</LINETAXES>
+			<DISCOUNTS>
+				<DISCOUNTPART id="{338925A5-C350-4D95-A9B4-3FCCCFE0D166}" disclineuni="102" sum="0"/>
+			</DISCOUNTS>
+			<LINEPAYMENTS>
+				<LINEPAYMENT id="{16D72549-14D8-4F31-9E2A-0A833D4F5EED}" sum="0"/>
+			</LINEPAYMENTS>
+		</LINE>
+		<LINE id="{CDECAC42-5308-4477-92BF-142556A105A6}" code="9748" name="Пакет" uni="17" type="dish" price="0" pr_list_sum="0" categ_id="" servprint_id="{C7949D55-80A4-4E14-BCC8-C9FA6F3DBC16}" servprint="Роллы" quantity="1" sum="0">
+			<LINETAXES count="1">
+				<TAX id="{34694A49-F862-4D07-9ACD-5EECF76E1B6E}" sum="0"/>
+			</LINETAXES>
+			<DISCOUNTS>
+				<DISCOUNTPART id="{338925A5-C350-4D95-A9B4-3FCCCFE0D166}" disclineuni="102" sum="0"/>
+			</DISCOUNTS>
+			<LINEPAYMENTS>
+				<LINEPAYMENT id="{16D72549-14D8-4F31-9E2A-0A833D4F5EED}" sum="0"/>
+			</LINEPAYMENTS>
+		</LINE>
+	</CHECKLINES>
+	<CHECKCATEGS count="3">
+		<CATEG id="{65969C51-DBDB-4D10-810F-5817A9F9E5B0}" code="13" name="кулинария" sum="209" discsum="0"/>
+		<CATEG id="{BB28A956-CE11-444C-81C2-736ED7B99B73}" code="28" name="Баранкин Food" sum="209" discsum="0"/>
+		<CATEG id="{C7949D55-80A4-4E14-BCC8-C9FA6F3DBC16}" code="15" name="Роллы" sum="0" discsum="0"/>
+	</CHECKCATEGS>
+	<CHECKDISCOUNTS count="1">
+		<DISCOUNT id="{338925A5-C350-4D95-A9B4-3FCCCFE0D166}" code="1122" name="PH Bonus" uni="102" interface="78" cardcode="79202291729" account="20864310" sum="0"/>
+	</CHECKDISCOUNTS>
+	<CHECKPAYMENTS count="3">
+		<PAYMENT id="{49E3DF19-0DE7-488C-9599-ABB37CB9869C}" code="110" name="Бонус Prime" uni="110" paytype="3" interface="78" cardcode="79202291729" account="20864310" ownerinfo="Оксана" exttransactioninfo="" bsum="83.6" sum="83.6"/>
+		<PAYMENT id="{16D72549-14D8-4F31-9E2A-0A833D4F5EED}" code="1" name="Рубли" uni="115" paytype="1" bsum="1034" sum="1034"/>
+		<PAYMENT id="{16D72549-14D8-4F31-9E2A-0A833D4F5EED}" code="1" name="Рубли" uni="116" paytype="1" bsum="-699.6" sum="-699.6"/>
+	</CHECKPAYMENTS>
+	<CHECKTAXES count="1">
+		<TAX id="{34694A49-F862-4D07-9ACD-5EECF76E1B6E}" code="1" rate="0" sum="0" name="НДС"/>
+	</CHECKTAXES>
+	<CHECKTAXES count="1">
+		<TAX id="{34694A49-F862-4D07-9ACD-5EECF76E1B6E}" code="1" rate="0" sum="0" name="НДС"/>
+	</CHECKTAXES>
+</CHECKDATA>
+</CHECK>>
+</CHECKDATA>
+</CHECK>um="0"/>
+		<CATEG id="{BB28A956-CE11-444C-81C2-736ED7B99B73}" code="28" name="Баранкин Food" sum="0" discsum="0"/>
+	</CHECKCATEGS>
+	<CHECKDISCOUNTS count="1">
+		<DISCOUNT id="{338925A5-C350-4D95-A9B4-3FCCCFE0D166}" code="1122" name="PH Bonus" uni="123" interface="78" cardcode="79515461708" account="20869472" sum="0"/>
+	</CHECKDISCOUNTS>
+	<CHECKPAYMENTS count="2">
+		<PAYMENT id="{49E3DF19-0DE7-488C-9599-ABB37CB9869C}" code="110" name="Бонус Prime" uni="131" paytype="3" interface="78" cardcode="79515461708" account="20869472" ownerinfo="Светлана" exttransactioninfo="" bsum="24" sum="24"/>
+		<PAYMENT id="{012B15DD-3DF2-4AD5-852D-BBEC1083C390}" code="109" name="Сбер Безнал" uni="136" paytype="3" bsum="309.3" sum="309.3"/>
+	</CHECKPAYMENTS>
+	<CHECKTAXES count="1">
+		<TAX id="{34694A49-F862-4D07-9ACD-5EECF76E1B6E}" code="1" rate="0" sum="0" name="НДС"/>
+	</CHECKTAXES>
+	<CHECKTAXES count="1">
+		<TAX id="{34694A49-F862-4D07-9ACD-5EECF76E1B6E}" code="1" rate="0" sum="0" name="НДС"/>
+	</CHECKTAXES>
+</CHECKDATA>
+</CHECK>>
+</CHECKDATA>
+</CHECK>

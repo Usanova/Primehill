@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CHECK stationcode="1" restaurantcode="425280001" cashservername="MIDPH"  generateddatetime="2022-11-07T12:52:10" chmode="1" locale="1049" shiftdate="2022-11-07" shiftnum="111">
+<EXTINFO reservation="">
+
+<INTERFACES current="1000219">
+	<INTERFACE type="PDS" id="1000219" mode="1" interface="6">
+		<HOLDERS>
+			<ITEM cardcode="777999"/>
+		</HOLDERS>
+		<ALLCARDS>
+			<ITEM cardcode="777999"/>
+		</ALLCARDS>
+	</INTERFACE>
+</INTERFACES></EXTINFO>
+
+<CHECKDATA checknum="100763" printnum="1" fiscdocnum="0" delprintnum="0" delfiscdocnum="0" extfiscid="" tablename="0" startservice="2022-11-07T12:51:16" closedatetime="2022-11-07T12:52:10" ordernum="2262/1" guests="1" orderguid="{23727D65-822C-4B32-8055-5BBF541E5CE7}" checkguid="{F0521873-BF60-4A52-ACB0-490F2ABD0878}" order_cat="1" order_type="9001" persistentcomment="">
+	<CHECKPERSONS count="1">
+		<PERSON id="{571E4162-4C24-4446-9E35-7CE5C0C6D278}" name="2" code="2" role="9999"/>
+	</CHECKPERSONS>
+	<CHECKLINES count="2">
+		<LINE id="{C89D8D18-9615-4B55-84A0-D4EAECB5589E}" code="18" name="Байкал" uni="4" type="dish" price="56" pr_list_sum="106" categ_id="" servprint_id="{E7D75D8C-B587-4D36-BC6D-85EA932A4686}" servprint="Напитки" quantity="1" sum="0.01">
+			<LINETAXES count="1">
+				<TAX id="{34694A49-F862-4D07-9ACD-5EECF76E1B6E}" sum="0"/>
+			</LINETAXES>
+			<DISCOUNTS>
+				<DISCOUNTPART id="{EA897D36-D148-4675-A58B-6E813A2A70BC}" disclineuni="9" sum="0"/>
+			</DISCOUNTS>
+			<LINEPAYMENTS>
+				<LINEPAYMENT id="{16D72549-14D8-4F31-9E2A-0A833D4F5EED}" sum="0.01"/>
+				<LINEPAYMENT id="{A6BDBFCF-5D72-4CAE-AB4A-086BBD8DFCCC}" sum="105.99"/>
+			</LINEPAYMENTS>
+		</LINE>
+		<LINE id="{D1393246-37F4-4028-8046-27CE318A0590}" code="21" name="Стакан 0.7" uni="8" type="modify" parent="4" price="50" quantity="1" sum="50" categ_id="" servprint_id=""/>
+	</CHECKLINES>
+	<CHECKCATEGS count="1">
+		<CATEG id="{E7D75D8C-B587-4D36-BC6D-85EA932A4686}" code="4" name="Напитки" sum="0.01" discsum="-105.99"/>
+	</CHECKCATEGS>
+	<CHECKPAYMENTS count="2">
+		<PAYMENT id="{A6BDBFCF-5D72-4CAE-AB4A-086BBD8DFCCC}" code="97" name="PH Bonus" uni="12" paytype="3" interface="6" cardcode="777999" account="20049973" ownerinfo="Чойрик Test" exttransactioninfo="" bsum="0" sum="105.99"/>
+		<PAYMENT id="{16D72549-14D8-4F31-9E2A-0A833D4F5EED}" code="1" name="Рубли" uni="15" paytype="1" bsum="0.01" sum="0.01"/>
+	</CHECKPAYMENTS>
+	<CHECKDISCOUNTS count="1">
+		<DISCOUNT id="{EA897D36-D148-4675-A58B-6E813A2A70BC}" code="2" name="Бонусы 5%" uni="9" interface="6" cardcode="777999" account="20049973" sum="0"/>
+	</CHECKDISCOUNTS>
+	<CHECKTAXES count="1">
+		<TAX id="{34694A49-F862-4D07-9ACD-5EECF76E1B6E}" code="1" rate="18" sum="0" name="НДС"/>
+	</CHECKTAXES>
+</CHECKDATA>
+</CHECK>
