@@ -98,6 +98,20 @@ INT64* getAccessAmountByNumber(Info *info, int number)
 	}
 }
 
+void setAccessAmountByNumber(Info *info, int number, INT64 value)
+{
+	 switch(number) {
+		case 1 : info->access_amount = value; break;
+		case 2 : info->acces_amount2 = value; break;
+		case 3 : info->access_amount3 = value; break;
+		case 4 : info->access_amount4 = value; break;
+		case 5 : info->access_amount5 = value; break;
+		case 6 : info->access_amount6 = value; break;
+		case 7 : info->access_amount7 = value; break;
+		case 8 : info->access_amount8 = value; break;
+	}
+}
+
  struct Transactionlist {
 	INT64  Card;
 	INT64  Kind;
@@ -195,6 +209,8 @@ extern "C" int __declspec(dllexport) __stdcall GetCardInfoEx(__int64 Card,
 		{
 			checkXml.init(InpBuf);
 		}
+		catch(CheckdataFound& e)
+		{}
 		catch(const rapidxml::parse_error)
 		{ getCardInfoResultLog << "Input xml parse error"; return 1; }
 		catch(XmlElementNotFound& e)
@@ -274,7 +290,7 @@ extern "C" int __declspec(dllexport) __stdcall GetCardInfoEx(__int64 Card,
 
 		string clientId_str = jsonGuestInfo["ClientId"].GetString();
 
-
+		int dataSize = szData.size();
 		int getDiscountRes = SendGetDiscount(hc, checkXml, token, clientId_str, getCardInfoResultLog,
 			info, acceptTypes,szData);
 		if(getDiscountRes != -1)
@@ -283,6 +299,7 @@ extern "C" int __declspec(dllexport) __stdcall GetCardInfoEx(__int64 Card,
 		hc.Close();
 
 		ofstream getDiscountResponse("getDiscountResponse.txt",ios::out|ios::binary);
+		dataSize = szData.size();
 		getDiscountResponse << szData.data();
 
 		ok = jsonDiscont.Parse(szData.data());
@@ -307,14 +324,18 @@ extern "C" int __declspec(dllexport) __stdcall GetCardInfoEx(__int64 Card,
 
 		info->max_discount = jsonDiscont["SumDiscount"].GetDouble()*100;
 
-		int bonusAccount = atoi(configuration->first_node("BonusAccount")
-			->first_node("FarcardsSubAccount")->value());
-		*getAccessAmountByNumber(info, bonusAccount) =  jsonDiscont["MaxBonus"].GetDouble()*100;
+		for (rapidxml::xml_node<>* bonus = configuration->first_node("BonusAccount");
+				bonus; bonus = bonus->next_sibling("BonusAccount"))
+		{
+			int bonusAccount = atoi(bonus->first_node("FarcardsSubAccount")->value());
+			//*getAccessAmountByNumber(info, bonusAccount) = jsonDiscont["MaxBonus"].GetDouble()*100;
+			setAccessAmountByNumber(info, bonusAccount, jsonDiscont["MaxBonus"].GetDouble()*100);
+		}
 
 		int depositAccount = atoi(configuration->first_node("DepositAccount")
 			->first_node("FarcardsSubAccount")->value());
-		*getAccessAmountByNumber(info, depositAccount) =  jsonDiscont["MaxDeposit"].GetDouble()*100;
-
+		//*getAccessAmountByNumber(info, depositAccount) =  jsonDiscont["MaxDeposit"].GetDouble()*100;
+		 setAccessAmountByNumber(info, depositAccount, jsonDiscont["MaxDeposit"].GetDouble()*100);
 		if(jsonDiscont.HasMember("Message"))
 		{
 			vector<char> message =   ToANSI(jsonDiscont["Message"].GetString());
@@ -369,6 +390,10 @@ int SendGetDiscount(httpClient& hc, checkXml& checkXml, string& token, string cl
 		{
 			 getCardInfoResultLog << "Error: GetDiscount, Error code: " << hcLastError; return 1;
 		}
+
+		if(szData.size() == 0)
+		{ getCardInfoResultLog << "Error: GetDiscount, Error code: " << hcLastError; return 1;}
+
 
 		return -1;
 }

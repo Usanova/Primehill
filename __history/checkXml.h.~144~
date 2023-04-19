@@ -40,6 +40,13 @@ struct AttributeNotFound : public XmlElementNotFound
 		{}
 };
 
+struct CheckdataNotFound : public XmlElementNotFound
+{
+	public:
+		CheckdataNotFound() : XmlElementNotFound("Checkdata not found")
+		{}
+};
+
 
 
 class checkXml
@@ -256,12 +263,12 @@ class checkXml
 				if(type == "combo")
 				{
 					categoryId = "combo";
-					categoryName = ToUtf8(L"ÐšÐ¾Ð¼Ð±Ð¾-Ð±Ð»ÑŽÐ´Ð¾").c_str();
+					categoryName = ToUtf8(L"Êîìáî-áëþäî").c_str();
 				}
 				else if(type == "modify")
 				{
 					categoryId = "modify";
-					categoryName = ToUtf8(L"ÐœÐ¾Ð´Ð¸Ñ„Ð¸ÐºÐ°Ñ‚Ð¾Ñ€").c_str();
+					categoryName = ToUtf8(L"Ìîäèôèêàòîð").c_str();
 				}
 				else
 				{
@@ -317,13 +324,33 @@ class checkXml
 			if(strlen(InpBuf) > s -  InpBuf +  checkStrLen)
 			{
 				char* s2 = strstr(InpBuf, "</CHECKDATA>");
+				int check_data_close_tag = 12;
 
 				char* start_check_data =  strstr(InpBuf, "<CHECKDATA");
 				if(s < start_check_data )
 				{
-					my_strdeletepart( InpBuf, s-InpBuf,  checkStrLen);
-					s = strstr(InpBuf, "</CHECK>");
-					s2 = strstr(InpBuf, "</CHECKDATA>");
+//					my_strdeletepart( InpBuf, s-InpBuf,  checkStrLen);
+//					s = strstr(InpBuf, "</CHECK>");
+//					s2 = strstr(InpBuf, "</CHECKDATA>");
+					int len = s2 - InpBuf + check_data_close_tag;
+					inputBuf.resize(len+1);
+					CopyMemory(inputBuf.data(), InpBuf, len);
+					inputBuf[len] = '\0';
+
+					ofstream inputBuf_checkdata_after_check("inputBuf_checkdata_after_check.txt",ios::out|ios::binary);
+					inputBuf_checkdata_after_check << inputBuf.data();
+					inputBuf_checkdata_after_check.close();
+
+
+					input_doc.parse<0>(inputBuf.data());
+
+					check = input_doc.first_node("CHECK");
+					checkdata = input_doc.first_node("CHECKDATA");
+					if(check == NULL)
+						throw NodeNotFound("CHECK");
+					if(checkdata == NULL)
+						throw NodeNotFound("CHECKDATA");
+                    return;
                 }
 
 				s = min(s, s2);
@@ -367,7 +394,7 @@ class checkXml
 			if(check == NULL)
 				throw NodeNotFound("CHECK");
 			if(checkdata == NULL)
-				throw NodeNotFound("CHECKDATA");
+				throw CheckdataNotFound();
 
 			return;
 		}
@@ -391,8 +418,29 @@ class checkXml
 			return token;
 		}
 
+		void getJsonResponseForGetDiscountWithEmtyOrder(string clientId, vector<char> &res)
+		{
+			json_doc.SetObject();
+
+			SetJsonValue(json_doc,"OrganizationId", getStrAttribute(check, "restaurantcode"));
+			SetJsonValue(json_doc,"OrderId", "");
+			SetJsonValue(json_doc,"ParentOrderId", "");
+			SetJsonValue(json_doc,"ClientId", clientId.c_str());
+			SetJsonValue(json_doc,"OrderNumber", "");
+			SetJsonValue(json_doc, "OrderSum", 0.0);
+			SetJsonValue(json_doc, "OrderSumWithDiscount", 0.0);
+
+			rapidjson::Value dishesJson(rapidjson::kArrayType);
+			json_doc.AddMember("Order", dishesJson, json_doc.GetAllocator());
+
+			jsonToVector(res);
+		}
+
 		void getJsonResponseForGetDiscount(string clientId, vector<char> &res)
 		{
+			if(checkdata == NULL)
+				getJsonResponseForGetDiscountWithEmtyOrder(clientId, res);
+
 			formJsonResponse(clientId);
 
 			jsonToVector(res);

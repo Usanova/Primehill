@@ -3,8 +3,8 @@
     <ApiAddress>rkeeper-api.dev.p-h.app</ApiAddress>
 	<SSL>true</SSL>
     <PlaceOfService>
-        <PlaceCode>1</PlaceCode>
-        <LoyltyApiToken>c81-d673-d559-ae1</LoyltyApiToken>
+        <PlaceCode>16</PlaceCode>
+        <LoyltyApiToken Default ="true">c81-d673-d559-ae1</LoyltyApiToken>
     </PlaceOfService>
     <PlaceOfService>
         <PlaceCode>18</PlaceCode>

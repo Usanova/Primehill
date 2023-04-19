@@ -2,6 +2,7 @@
 #include <vector>
 #include <exception>
 #include <math.h>
+#include <algorithm>
 #include "rapidjson/document.h"
 #include "rapidjson/writer.h"
 #include "rapidjson/stringbuffer.h"
@@ -39,6 +40,13 @@ struct AttributeNotFound : public XmlElementNotFound
 		{}
 };
 
+struct CheckdataNotFound : public XmlElementNotFound
+{
+	public:
+		CheckdataNotFound() : XmlElementNotFound("Checkdata not found")
+		{}
+};
+
 
 
 class checkXml
@@ -67,6 +75,18 @@ class checkXml
 				s[len - 1] = '\0';
 			return s + 1;
 		};
+
+		void my_strdeletepart(char*str,int begins,int lendel)
+		{
+			int len = 0;
+			while(str[len]!='\0')
+				len++;
+			len++;
+			int copypartstr = len -begins-lendel;
+
+			for(int i = copypartstr, j =0;i>0;i--,j++)
+				str[begins+j]=str[begins+lendel+j];
+		}
 
 		inline void SetJsonValue(rapidjson::Document &doc, char* member_str,
 			const char* value_str)
@@ -149,7 +169,7 @@ class checkXml
 			json_doc.SetObject();
 
 			SetJsonValue(json_doc,"OrganizationId", getStrAttribute(check, "restaurantcode"));
-			SetJsonValue(json_doc,"OrderId", sliceId(getStrAttribute(checkdata, "checkguid")));
+			SetJsonValue(json_doc,"OrderId", sliceId(getStrAttribute(checkdata, "orderguid")));
 
 			if(checklines == NULL)
 			{
@@ -183,7 +203,7 @@ class checkXml
 		{
 			formBaseJsonResponse();
 
-			SetJsonValue(json_doc,"ParentOrderId", sliceId(getStrAttribute(checkdata,"checkguid")));
+			SetJsonValue(json_doc,"ParentOrderId", sliceId(getStrAttribute(checkdata,"orderguid")));
 			SetJsonValue(json_doc,"ClientId", clientId.c_str());
 			SetJsonValue(json_doc,"OrderNumber", getStrAttribute(checkdata,"checknum"));
 
@@ -210,6 +230,8 @@ class checkXml
 				else
 				{
 					double quantity = getFloatAttribute(dish, "quantity");
+					if(abs(quantity - 0) < 0.0000001)
+						   quantity = 1;
 
 					dish_price = getFloatAttribute(dish, "price")*quantity;
 				}
@@ -232,6 +254,8 @@ class checkXml
 
 				char* quantity_str = getStrAttribute(dish, "quantity");
 				double quantity = atof(quantity_str);
+				if(abs(quantity - 0) < 0.0000001)
+						   quantity = 1;
 
 				string type = string(getStrAttribute(dish, "type"));
 				const char* categoryId;
@@ -266,7 +290,9 @@ class checkXml
 				double price;
 				double priceWithDiscount;
 
-				if(type == "modify" || (type == "dish" && dish->first_attribute("parent") != NULL))
+				if(type == "modify"
+					|| (type == "dish" && dish->first_attribute("parent") != NULL)
+					)
 				{
 					price = 0;
 					priceWithDiscount = 0;
@@ -298,6 +324,56 @@ class checkXml
 			if(strlen(InpBuf) > s -  InpBuf +  checkStrLen)
 			{
 				char* s2 = strstr(InpBuf, "</CHECKDATA>");
+
+				char* start_check_data =  strstr(InpBuf, "<CHECKDATA");
+				if(start_check_data == NULL)
+				{
+					int check_close_tag = 8;
+					int len = s - InpBuf + check_close_tag;
+					inputBuf.resize(len+1);
+					CopyMemory(inputBuf.data(), InpBuf, len);
+					inputBuf[len] = '\0';
+
+					ofstream inputBuf_without_checkdata("inputBuf_without_checkdata.txt",ios::out|ios::binary);
+					inputBuf_without_checkdata << inputBuf.data();
+					inputBuf_without_checkdata.close();
+
+
+					input_doc.parse<0>(inputBuf.data());
+
+					check = input_doc.first_node("CHECK");
+					if(check == NULL)
+						throw NodeNotFound("CHECK");
+
+					  throw CheckdataNotFound();
+                }
+				if(s < start_check_data )
+				{
+//					my_strdeletepart( InpBuf, s-InpBuf,  checkStrLen);
+//					s = strstr(InpBuf, "</CHECK>");
+//					s2 = strstr(InpBuf, "</CHECKDATA>");
+					int check_data_close_tag = 12;
+					int len = s2 - InpBuf + check_data_close_tag;
+					inputBuf.resize(len+1);
+					CopyMemory(inputBuf.data(), InpBuf, len);
+					inputBuf[len] = '\0';
+
+					ofstream inputBuf_checkdata_after_check("inputBuf_checkdata_after_check.txt",ios::out|ios::binary);
+					inputBuf_checkdata_after_check << inputBuf.data();
+					inputBuf_checkdata_after_check.close();
+
+
+					input_doc.parse<0>(inputBuf.data());
+
+					check = input_doc.first_node("CHECK");
+					checkdata = input_doc.first_node("CHECKDATA");
+					if(check == NULL)
+						throw NodeNotFound("CHECK");
+					if(checkdata == NULL)
+						throw NodeNotFound("CHECKDATA");
+                    return;
+                }
+
 				s = min(s, s2);
 				int firstPartLen = s -  InpBuf;
 				char* inputEnd = "</CHECKDATA>\n</CHECK>\0";
@@ -313,7 +389,7 @@ class checkXml
 				inputBuf_xml_invalid << inputBuf.data();
 				inputBuf_xml_invalid.close();
 
-                input_doc.parse<0>(inputBuf.data());
+				input_doc.parse<0>(inputBuf.data());
 
 				check = input_doc.first_node("CHECK");
 				checkdata = check->first_node("CHECKDATA");
@@ -363,8 +439,29 @@ class checkXml
 			return token;
 		}
 
+		void getJsonResponseForGetDiscountWithEmtyOrder(string clientId, vector<char> &res)
+		{
+			json_doc.SetObject();
+
+			SetJsonValue(json_doc,"OrganizationId", getStrAttribute(check, "restaurantcode"));
+			SetJsonValue(json_doc,"OrderId", "");
+			SetJsonValue(json_doc,"ParentOrderId", "");
+			SetJsonValue(json_doc,"ClientId", clientId.c_str());
+			SetJsonValue(json_doc,"OrderNumber", "");
+			SetJsonValue(json_doc, "OrderSum", 0.0);
+			SetJsonValue(json_doc, "OrderSumWithDiscount", 0.0);
+
+			rapidjson::Value dishesJson(rapidjson::kArrayType);
+			json_doc.AddMember("Order", dishesJson, json_doc.GetAllocator());
+
+			jsonToVector(res);
+		}
+
 		void getJsonResponseForGetDiscount(string clientId, vector<char> &res)
 		{
+			if(checkdata == NULL)
+				getJsonResponseForGetDiscountWithEmtyOrder(clientId, res);
+
 			formJsonResponse(clientId);
 
 			jsonToVector(res);
@@ -375,7 +472,7 @@ class checkXml
 			return getIntAttribute(check, "chmode");
         }
 
-		void getJsonResponseForCloseOrder(int bonusCurrencyCode, int depositCurrencyCode,
+		void getJsonResponseForCloseOrder(vector<int> bonusCurrencyCodes, int depositCurrencyCode,
 			vector<char> &res, char*& clientId, bool& getDiscountSended)
 		{
 			clientId = NULL;
@@ -394,7 +491,7 @@ class checkXml
 			{
 				int paymentCode = getIntAttribute(payment, "code");
 
-				if(paymentCode == bonusCurrencyCode)
+				if(find(bonusCurrencyCodes.begin(), bonusCurrencyCodes.end(), paymentCode) != bonusCurrencyCodes.end())
 				{
 					clientId = getStrAttribute(payment, "account");
 					bonusWriteOff = getStrAttribute(payment, "sum");

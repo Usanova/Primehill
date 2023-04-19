@@ -2,6 +2,7 @@
 #include <vector>
 #include <exception>
 #include <math.h>
+#include <algorithm>
 #include "rapidjson/document.h"
 #include "rapidjson/writer.h"
 #include "rapidjson/stringbuffer.h"
@@ -149,7 +150,7 @@ class checkXml
 			json_doc.SetObject();
 
 			SetJsonValue(json_doc,"OrganizationId", getStrAttribute(check, "restaurantcode"));
-			SetJsonValue(json_doc,"OrderId", sliceId(getStrAttribute(checkdata, "checkguid")));
+			SetJsonValue(json_doc,"OrderId", sliceId(getStrAttribute(checkdata, "orderguid")));
 
 			if(checklines == NULL)
 			{
@@ -183,7 +184,7 @@ class checkXml
 		{
 			formBaseJsonResponse();
 
-			SetJsonValue(json_doc,"ParentOrderId", sliceId(getStrAttribute(checkdata,"checkguid")));
+			SetJsonValue(json_doc,"ParentOrderId", sliceId(getStrAttribute(checkdata,"orderguid")));
 			SetJsonValue(json_doc,"ClientId", clientId.c_str());
 			SetJsonValue(json_doc,"OrderNumber", getStrAttribute(checkdata,"checknum"));
 
@@ -210,6 +211,8 @@ class checkXml
 				else
 				{
 					double quantity = getFloatAttribute(dish, "quantity");
+					if(abs(quantity - 0) < 0.0000001)
+						   quantity = 1;
 
 					dish_price = getFloatAttribute(dish, "price")*quantity;
 				}
@@ -232,6 +235,8 @@ class checkXml
 
 				char* quantity_str = getStrAttribute(dish, "quantity");
 				double quantity = atof(quantity_str);
+				if(abs(quantity - 0) < 0.0000001)
+						   quantity = 1;
 
 				string type = string(getStrAttribute(dish, "type"));
 				const char* categoryId;
@@ -266,7 +271,9 @@ class checkXml
 				double price;
 				double priceWithDiscount;
 
-				if(type == "modify" || (type == "dish" && dish->first_attribute("parent") != NULL))
+				if(type == "modify"
+					|| (type == "dish" && dish->first_attribute("parent") != NULL)
+					)
 				{
 					price = 0;
 					priceWithDiscount = 0;
@@ -375,7 +382,7 @@ class checkXml
 			return getIntAttribute(check, "chmode");
         }
 
-		void getJsonResponseForCloseOrder(int bonusCurrencyCode, int depositCurrencyCode,
+		void getJsonResponseForCloseOrder(vector<int> bonusCurrencyCodes, int depositCurrencyCode,
 			vector<char> &res, char*& clientId, bool& getDiscountSended)
 		{
 			clientId = NULL;
@@ -394,7 +401,7 @@ class checkXml
 			{
 				int paymentCode = getIntAttribute(payment, "code");
 
-				if(paymentCode == bonusCurrencyCode)
+				if(find(bonusCurrencyCodes.begin(), bonusCurrencyCodes.end(), paymentCode) != bonusCurrencyCodes.end())
 				{
 					clientId = getStrAttribute(payment, "account");
 					bonusWriteOff = getStrAttribute(payment, "sum");
@@ -423,8 +430,6 @@ class checkXml
 						clientId = getStrAttribute(discount, "account");
 
 					double discountSum = getFloatAttribute(discount, "sum");
-					if(discountSum != 0)
-						  getDiscountSended = true;
 				}
 
 				if(clientId == NULL)

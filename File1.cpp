@@ -209,6 +209,8 @@ extern "C" int __declspec(dllexport) __stdcall GetCardInfoEx(__int64 Card,
 		{
 			checkXml.init(InpBuf);
 		}
+		catch(CheckdataNotFound& e)
+		{}
 		catch(const rapidxml::parse_error)
 		{ getCardInfoResultLog << "Input xml parse error"; return 1; }
 		catch(XmlElementNotFound& e)
