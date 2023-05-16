@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<CHECK stationcode="110" restaurantcode="154320001" cashservername="BAR8MIDSERV"  generateddatetime="2023-04-05T17:09:27" chmode="0" locale="1049" shiftdate="2023-04-05" shiftnum="780">
+<CHECK stationcode="110" restaurantcode="154320001" cashservername="BAR8MIDSERV"  generateddatetime="2023-05-16T16:16:18" chmode="0" locale="1049" shiftdate="2023-05-16" shiftnum="820">
 <EXTINFO reservation="">
 
 <INTERFACES current="1025912">
