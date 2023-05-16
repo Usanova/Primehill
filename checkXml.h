@@ -345,6 +345,8 @@ class checkXml
 					if(check == NULL)
 						throw NodeNotFound("CHECK");
 
+					checkdata = NULL;
+
 					  throw CheckdataNotFound();
                 }
 				if(s < start_check_data )
